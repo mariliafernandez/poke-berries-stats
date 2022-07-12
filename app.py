@@ -8,10 +8,17 @@ app = Flask(__name__)
 @app.route("/allBerryStats", methods=['GET'])
 def all_berry_stats():
 
-    growth_data = get_growth_data()
+    try:
+        growth_data = get_growth_data()
+    except Exception as e:
+        response = {"Error": str(e)}
+        return (response, 500, {"content-type":"application/json"})
+        
+
     growth_times = growth_data['growth_times']
     names = growth_data['names']
+
     response = {"berries_names": names}
     response.update(get_stats(growth_times))
 
-    return (json.dumps(response), {"content-type":"application/JSON"})
+    return (response, {"content-type":"application/json"})
