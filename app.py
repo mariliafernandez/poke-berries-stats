@@ -1,6 +1,7 @@
 import json
 from flask import Flask
 from load_data import get_growth_data
+from stats import get_stats
 
 app = Flask(__name__)
 
@@ -8,16 +9,9 @@ app = Flask(__name__)
 def all_berry_stats():
 
     growth_data = get_growth_data()
-    print(growth_data)
+    growth_times = growth_data['growth_times']
+    names = growth_data['names']
+    response = {"berries_names": names}
+    response.update(get_stats(growth_times))
 
-    response = {
-        "berries_names": list(),
-        "min_growth_time": "",
-        "median_growth_time": "",
-        "max_growth_time": "",
-        "variance_growth_time": "",
-        "mean_growth_time": "",
-        "frequency_growth_time": ""
-    }
-
-    return json.dumps(response)
+    return (json.dumps(response), {"content-type":"application/JSON"})

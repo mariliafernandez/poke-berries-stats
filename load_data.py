@@ -8,8 +8,6 @@ def get_all_berry_results():
 
     while next_page:
 
-        print(next_page)
-        
         response = requests.get(next_page).json()
         results += response['results']
         next_page = response['next']
