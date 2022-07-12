@@ -1,10 +1,14 @@
-from flask import Flask
 import json
+from flask import Flask
+from load_data import get_growth_data
 
 app = Flask(__name__)
 
 @app.route("/allBerryStats", methods=['GET'])
 def all_berry_stats():
+
+    growth_data = get_growth_data()
+    print(growth_data)
 
     response = {
         "berries_names": list(),
