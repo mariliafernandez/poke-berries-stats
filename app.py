@@ -1,4 +1,3 @@
-import json
 from flask import Flask
 from load_data import get_growth_data
 from stats import get_stats
@@ -14,7 +13,6 @@ def all_berry_stats():
         response = {"Error": str(e)}
         return (response, 500, {"content-type":"application/json"})
         
-
     growth_times = growth_data['growth_times']
     names = growth_data['names']
 
