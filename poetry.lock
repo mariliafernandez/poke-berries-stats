@@ -1112,8 +1112,8 @@ watchdog = ["watchdog"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.10"
-content-hash = "afddcc2edd847c48918c050d3234c259089bf7e953a2435c8fcb32340e01abed"
+python-versions = "3.10.2"
+content-hash = "f3f76261771816209ca3e86d5568b421f94c01b4b2eb66b78ab290b1f84a97cd"
 
 [metadata.files]
 anyio = [
