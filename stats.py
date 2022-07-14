@@ -78,16 +78,6 @@ def get_stats(data:list):
         "variance_growth_time": get_variance(np_data),
         "mean_growth_time": get_mean(np_data),
         "frequency_growth_time": get_frequency(np_data),
-        # "histogram_b64": encoded_histogram(get_frequency(np_data))
     }
 
 
-if __name__ == '__main__':
-
-    data = {
-		6: 4,
-		8: 6,
-		15: 5,
-		18: 17,
-		24: 12
-	}
