@@ -1,22 +1,40 @@
-from flask import Flask
+from flask import Flask, render_template, request
 from load_data import get_growth_data
-from stats import get_stats
+from stats import generate_histogram_html, get_stats
+
 
 app = Flask(__name__)
 
 @app.route("/allBerryStats", methods=['GET'])
 def all_berry_stats():
 
+    response = dict()
+
     try:
         growth_data = get_growth_data()
     except Exception as e:
-        response = {"Error": str(e)}
-        return (response, 500, {"content-type":"application/json"})
+        response = {'Error': str(e)}
+        return (response, 500, {'content-type':'application/json'})
         
     growth_times = growth_data['growth_times']
     names = growth_data['names']
+    
+    response['berries_names'] = names
+    
+    stats = get_stats(growth_times)
+    response.update(stats)
 
-    response = {"berries_names": names}
-    response.update(get_stats(growth_times))
+    template_name = 'histogram'
+    generate_histogram_html(stats['frequency_growth_time'], template_name)
 
-    return (response, {"content-type":"application/json"})
+    response['histogram_url'] = request.url.replace('allBerryStats', f'histogram?template={template_name}')
+
+    return (response, {'content-type':'application/json'})
+
+
+@app.route('/histogram', methods=['GET'])
+def histogram():
+
+    template_name = request.args.get('template')
+
+    return render_template(f'{template_name}.html')
