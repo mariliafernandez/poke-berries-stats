@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from jinja2 import TemplateNotFound
 from load_data import get_growth_data
 from stats import generate_histogram_html, get_stats
 
@@ -27,14 +28,15 @@ def all_berry_stats():
     template_name = 'histogram'
     generate_histogram_html(stats['frequency_growth_time'], template_name)
 
-    response['histogram_url'] = request.url.replace('allBerryStats', f'histogram?template={template_name}')
+    response['histogram_url'] = request.url.replace('allBerryStats', f'histogram/{template_name}')
 
     return (response, {'content-type':'application/json'})
 
 
-@app.route('/histogram', methods=['GET'])
-def histogram():
+@app.route('/histogram/<template_name>', methods=['GET'])
+def histogram(template_name):
 
-    template_name = request.args.get('template')
-
-    return render_template(f'{template_name}.html')
+    try:
+        return render_template(f'{template_name}.html')
+    except TemplateNotFound:
+        return ({'Error':'Template not found'}, 404, {'content-type':'application/json'})

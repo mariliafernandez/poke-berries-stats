@@ -35,6 +35,7 @@
 ## Endpoint
 
 ### /allBerryStats [GET]
+Returns the stats and the url to the generated histogram graph 
 
 * **Response**
 
@@ -46,6 +47,10 @@
         "max_growth_time": "int",
         "variance_growth_time": "float",
         "mean_growth_time": "float",
-        "frequency_growth_time": {"growth_time (int)": "frequency (int)", ...}
+        "frequency_growth_time": {"growth_time (int)": "frequency (int)", ...},
+        "histogram_url": "str"
     }
     ```
+
+### /histogram/<template_name> [GET]
+Renders the html file (template_name) containing the graph
