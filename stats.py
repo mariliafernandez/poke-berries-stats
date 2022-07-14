@@ -69,15 +69,19 @@ def generate_histogram_html(data, template_name):
 
 def get_stats(data:list):
 
-    np_data = np.asarray(data)
+    if data and len(data) > 0:
 
-    return {
-        "min_growth_time": get_min(np_data),
-        "median_growth_time": get_median(np_data),
-        "max_growth_time": get_max(np_data),
-        "variance_growth_time": get_variance(np_data),
-        "mean_growth_time": get_mean(np_data),
-        "frequency_growth_time": get_frequency(np_data),
-    }
+        np_data = np.asarray(data)
 
+        return {
+            "min_growth_time": get_min(np_data),
+            "median_growth_time": get_median(np_data),
+            "max_growth_time": get_max(np_data),
+            "variance_growth_time": get_variance(np_data),
+            "mean_growth_time": get_mean(np_data),
+            "frequency_growth_time": get_frequency(np_data),
+        }
+    
+    return {}
+    
 

@@ -7,7 +7,7 @@ import numpy as np
 
 class TestStats:
     array = [1,1,2,2,2,3,5,5,5,5,5]
-
+    zeros = [0,0,0,0,0,0,0,0,0,0,0]
     
     def test_get_stats_types(self):
 
@@ -43,6 +43,24 @@ class TestStats:
         assert all_stats['variance_growth_time'] == np.var(self.array)
         assert all_stats['mean_growth_time'] == np.mean(self.array)
         assert all_stats['frequency_growth_time'] == {1:2, 2:3, 3:1, 5:5}
+
+    
+    def test_get_stats_no_entry(self):
+
+        assert stats.get_stats([]) == {}
+        assert stats.get_stats(None) == {}
+
+    
+    def test_get_stats_all_zeros(self):
+
+        all_stats = stats.get_stats(self.zeros)
+        
+        assert all_stats['min_growth_time'] == 0
+        assert all_stats['median_growth_time'] == 0
+        assert all_stats['max_growth_time'] == 0
+        assert all_stats['variance_growth_time'] == 0
+        assert all_stats['mean_growth_time'] == 0
+        assert all_stats['frequency_growth_time'] == {0:len(self.zeros)}
 
 
 class TestLoadData:
